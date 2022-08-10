@@ -9,7 +9,7 @@ const api={
 function App() {
   const [query,setQuery]=useState('');
   const [weather,setWeather]=useState({});
-  const [weatherImg,setWeatherImg]=useState('');
+  const [weatherImg,setWeatherImg]=useState('app');
   const search=evt=>{
     if(evt.key==="Enter"){
       axios(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`).then(result=>{
