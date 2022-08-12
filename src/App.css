@@ -7,14 +7,26 @@
 body{
   font-family: "montseratt", sans-serif;
 }
+.clouds{
+  background-image: url('./images/cloudy.jpg');
+  background-size: cover;
+  background-position: top;
+  transition: 0.4s ease;
+}
 .haze{
   background-image: url('./images/haze.jpg');
   background-size: cover;
   background-position: top;
   transition: 0.4s ease;
 }
+.rain{
+  background-image: url('./images/rain.jpg');
+  background-size: cover;
+  background-position: top;
+  transition: 0.4s ease;
+}
 .app{
-  background-image: url('./images/cloudy.jpg');
+  background-image: url('./images/app.jpg');
   background-size: cover;
   background-position: top;
   transition: 0.4s ease;

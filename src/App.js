@@ -10,34 +10,37 @@ function App() {
   const [query,setQuery]=useState('');
   const [weather,setWeather]=useState({});
   const [weatherImg,setWeatherImg]=useState('app');
-  const search=evt=>{
+  let background;
+  const search=async(evt)=>{
     if(evt.key==="Enter"){
-      axios(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`).then(result=>{
+     await ( axios(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`).then(result=>{
         //  console.log("in fetch " +JSON.stringify(result.data))
           const respond=JSON.stringify(result.data)
          // console.log(JSON.parse(respond).main)
-
           setWeather(JSON.parse(respond));
           setQuery('');
+          background=JSON.parse(respond).weather[0].main
           console.log("in console "+weather);
-          
-          if(typeof weather.main!='undefined'){
-            if(weather.weather[0].main==='Clouds'){
-              setWeatherImg('app');
-              console.log(weather,weatherImg)
-            }else if(weather.weather[0].main==='Clear'){
-              setWeatherImg('warm');
-              console.log(weather,weatherImg)
-            }else if(weather.weather[0].main==='Haze'){
-              setWeatherImg('haze');
-              console.log(weather,weatherImg)
-            }
-          }else{
-            setWeatherImg('app');
-            console.log("in console "+weatherImg);
-          }
-        })
+        }))
+      
     }
+   
+      if(background==='Clouds'){
+        setWeatherImg('clouds');
+        console.log(weather,weatherImg)
+      }else if(background==='Clear'){
+        setWeatherImg('warm');
+        console.log(weather,weatherImg)
+      }else if(background==='Haze'){
+        setWeatherImg('haze');
+        console.log(weather,weatherImg)
+      }else if(background==='Rain'){
+        setWeather('rain')
+      }else{
+      setWeatherImg('app');
+      console.log("in console "+weatherImg);
+    }
+
   }
   const dateBuilder=(d)=>{
     let months=["January","February","March","April","May","June","July","August","September","October","November","December"]
@@ -48,13 +51,14 @@ function App() {
     let year=d.getFullYear();
     return `${day}  ${date}  ${month}  ${year}`
   }
+  
  
   return (
     <div className={weatherImg}>
       <main>
       <div className="search-box">
         <input type="text" className="search-bar" placeholder="Search..." onChange={e=>setQuery(e.target.value)}
-        value={query} onKeyPress={search} />
+        value={query} onKeyPress={search}  />
       </div>
       {(typeof weather.main !="undefined")?(<div>
         <div className="location-box">
